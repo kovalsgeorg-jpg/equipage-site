@@ -1,0 +1,301 @@
+@import "tailwindcss";
+
+/* «Вечерняя дорога экипажа»: тёмная кинематографическая сцена как
+   продолжение видео. Тона равной светлоты различаются температурой;
+   крем включается там, где посетитель работает (меню, форма).
+   Латунь = свет фонарей. */
+:root {
+  --night: #16180f;
+  --umber: #221a10;
+  --olive: #16211a;
+  --wine: #291320;
+  --coal: #101208;
+
+  --cream: #f4efe3;
+  --cream-2: #efe7d8;
+
+  --ink: #f1ead9;
+  --ink-2: #c9c2ae;
+  --brass: #c9a86c;
+  --brass-deep: #a9853c;
+  --accent-ink: #6f5520;
+
+  --fg-on-cream: #22231f;
+  --fg2-on-cream: #4c4a40;
+  --muted-on-cream: #6d6a5c;
+  --line-on-cream: #ddd3bf;
+
+  --line: rgba(201, 168, 108, 0.22);
+  --line-soft: rgba(241, 234, 217, 0.12);
+
+  --danger: #c96a5e;
+  --danger-cream: #a33d34;
+  --elev: 0 24px 60px rgba(0, 0, 0, 0.45);
+  --focus-ring: 0 0 0 4px rgba(201, 168, 108, 0.4);
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Дневная тема: фирменная светлая «тихая роскошь».
+   Та же композиция, те же тональные сцены, светлота выравнена;
+   видео-hero и подвал остаются вечерними в обеих темах. */
+[data-theme="day"] {
+  --night: #f6f2ea;
+  --umber: #f3ead8;
+  --olive: #edf0df;
+  --wine: #f6e7ee;
+  --coal: #efe9dc;
+
+  --cream: #fdfbf6;
+  --cream-2: #f0e7d8;
+
+  --ink: #22231f;
+  --ink-2: #56544a;
+  --brass: #8a6c2a;
+  --brass-deep: #6f5520;
+
+  --line: rgba(111, 85, 32, 0.4);
+  --line-soft: rgba(34, 35, 31, 0.14);
+
+  --panel: rgba(34, 35, 31, 0.04);
+  --focus-ring: 0 0 0 4px rgba(138, 108, 42, 0.3);
+}
+
+:root {
+  --panel: rgba(255, 255, 255, 0.03);
+}
+
+@theme inline {
+  --color-night: var(--night);
+  --color-umber: var(--umber);
+  --color-olive: var(--olive);
+  --color-wine: var(--wine);
+  --color-coal: var(--coal);
+  --color-cream: var(--cream);
+  --color-cream-2: var(--cream-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-brass: var(--brass);
+  --color-brass-deep: var(--brass-deep);
+  --color-accent-ink: var(--accent-ink);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-danger: var(--danger);
+  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-golos), system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  background: var(--night);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* Тональные сцены страницы: температура меняется, светлота нет */
+[data-tone="night"] { background: var(--night); }
+[data-tone="umber"] { background: var(--umber); }
+[data-tone="olive"] { background: var(--olive); }
+[data-tone="wine"] { background: var(--wine); }
+
+/* Кремовые сцены: свет включён, посетитель работает */
+.scene-cream {
+  background: var(--cream);
+  color: var(--fg-on-cream);
+}
+.scene-cream ::selection { background: rgba(169, 133, 60, 0.3); }
+
+::selection {
+  background: rgba(201, 168, 108, 0.35);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--coal); }
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 108, 0.35);
+  border-radius: 6px;
+  border: 3px solid var(--coal);
+}
+* { scrollbar-color: rgba(201, 168, 108, 0.45) var(--coal); scrollbar-width: thin; }
+[data-theme="day"] ::-webkit-scrollbar-thumb { background: rgba(138, 108, 42, 0.5); }
+[data-theme="day"] * { scrollbar-color: rgba(138, 108, 42, 0.55) var(--coal); }
+
+/* Полупрозрачная панель (конфигуратор, цитаты) в обеих темах */
+.panel { background: var(--panel); }
+.row-hover { transition: background 0.2s var(--ease); }
+.row-hover:hover { background: var(--panel); }
+
+/* Появление по скроллу: контент виден всегда, прячет только живой скрипт */
+.rv {
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition-delay: var(--rv-delay, 0ms);
+}
+.rv-armed { opacity: 0; transform: translateY(18px); }
+.rv-armed.rv-on { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rv, .rv-armed { transition: none; opacity: 1; transform: none; }
+}
+
+/* Кнопки */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 30px;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.2;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease),
+    border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.btn:active { transform: translateY(1px); }
+
+.btn-brass {
+  background: var(--brass);
+  color: #1c1509;
+}
+.btn-brass:hover { background: #d8b87c; }
+
+.btn-light {
+  background: var(--cream);
+  color: var(--fg-on-cream);
+}
+.btn-light:hover { background: #fffdf6; }
+
+.btn-ghost {
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--panel);
+  backdrop-filter: blur(4px);
+}
+.btn-ghost:hover { border-color: var(--brass); color: var(--brass); }
+
+/* Кнопки на видео: фиксированные в обеих темах */
+.btn-brass-hero {
+  background: #c9a86c;
+  color: #1c1509;
+}
+.btn-brass-hero:hover { background: #d8b87c; }
+
+/* Кнопка на видео: фиксированно светлая в обеих темах */
+.btn-ghost-hero {
+  border: 1px solid rgba(241, 234, 217, 0.4);
+  color: #f1ead9;
+  background: rgba(16, 18, 8, 0.25);
+  backdrop-filter: blur(4px);
+}
+.btn-ghost-hero:hover { border-color: #c9a86c; color: #c9a86c; }
+
+/* Логотип-карета в шапке: над видео всегда светлая; в наполнившейся
+   шапке зависит от темы */
+.hdr-carriage-dark { display: none; }
+[data-theme="day"] .hdr-solid .hdr-carriage-dark { display: block; }
+[data-theme="day"] .hdr-solid .hdr-carriage-light { display: none; }
+
+/* Иконки переключателя темы */
+.theme-icon-day { display: none; }
+[data-theme="day"] .theme-icon-day { display: block; }
+[data-theme="day"] .theme-icon-night { display: none; }
+
+.btn-dark {
+  background: var(--fg-on-cream);
+  color: var(--cream);
+}
+.btn-dark:hover { background: #35362f; }
+
+.btn-outline-dark {
+  border: 1px solid var(--line-on-cream);
+  color: var(--fg-on-cream);
+}
+.btn-outline-dark:hover { border-color: var(--brass-deep); color: var(--accent-ink); }
+
+/* Поля формы на креме */
+.field {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--line-on-cream);
+  border-radius: 10px;
+  background: #fdfbf6;
+  color: var(--fg-on-cream);
+  font-size: 16px;
+  transition: border-color 0.15s ease;
+  caret-color: var(--brass-deep);
+}
+.field:hover { border-color: var(--brass-deep); }
+.field::placeholder { color: var(--muted-on-cream); }
+.field[aria-invalid="true"] { border-color: var(--danger-cream); }
+
+/* Бегущая строка имён */
+.mq-window {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.mq-track { display: flex; width: max-content; animation: mq 30s linear infinite; }
+.mq-set { display: flex; }
+.mq-item {
+  white-space: nowrap;
+  padding: 0 30px;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 34px);
+  color: var(--ink);
+}
+.mq-item::after { content: "·"; margin-left: 60px; color: var(--brass); }
+@keyframes mq {
+  to { transform: translateX(calc(-100% / var(--mq-copies, 2))); }
+}
+@media (prefers-reduced-motion: reduce) { .mq-track { animation: none; } }
+
+/* Медленное «дыхание» фото в кадре */
+@keyframes kenburns {
+  from { transform: scale(1); }
+  to { transform: scale(1.07); }
+}
+.kb img {
+  animation: kenburns 14s var(--ease) alternate infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) { .kb img { animation: none; } }
+
+/* Горизонтальная лента галереи */
+.reel {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+}
+.reel > * { scroll-snap-align: start; flex: none; }
+
+/* Дорога заказа: пунктир, прорисовывающийся по скроллу */
+.road path {
+  stroke-dasharray: 8 10;
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+/* Тонкая волосяная линия */
+.hair { border-color: var(--line-soft); }
