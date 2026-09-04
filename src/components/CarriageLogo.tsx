@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 /** Фирменный знак-карета (исторический логотип компании, перекрашен
  *  в фирменные цвета). tone="dark" для светлого фона, "light" для тёмного. */
 export function CarriageLogo({
@@ -11,7 +13,7 @@ export function CarriageLogo({
 }) {
   return (
     <Image
-      src={tone === "dark" ? "/logo/carriage-dark-sm.png" : "/logo/carriage-light-sm.png"}
+      src={`${base}${tone === "dark" ? "/logo/carriage-dark-sm.png" : "/logo/carriage-light-sm.png"}`}
       alt=""
       aria-hidden="true"
       width={480}
