@@ -59,7 +59,9 @@ export function LeadForm() {
       const data = (await res.json().catch(() => null)) as
         | { error?: string }
         | null;
-      setStatus(data?.error === "not_configured" ? "not_configured" : "error");
+      const noReceiver =
+        data?.error === "not_configured" || res.status === 404 || res.status === 405;
+      setStatus(noReceiver ? "not_configured" : "error");
     } catch {
       setStatus("error");
     }

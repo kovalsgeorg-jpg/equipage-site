@@ -40,11 +40,14 @@ export const legal = {
  *  Цели, которые шлёт сайт: lead_submit (отправка формы), phone_click. */
 export const metrikaId = process.env.NEXT_PUBLIC_METRIKA_ID ?? "";
 
+/** Префикс путей для статической сборки под подкаталогом (GitHub Pages). */
+const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 /** Видео первого экрана: собственная съёмка компании. */
 export const heroVideo = {
-  mp4: "/video/hero-team.mp4",
-  webm: "/video/hero-team.webm",
-  poster: "/video/hero-team-poster.jpg",
+  mp4: `${base}/video/hero-team.mp4`,
+  webm: `${base}/video/hero-team.webm`,
+  poster: `${base}/video/hero-team-poster.jpg`,
 } as const;
 
 /** Подтверждённые цифры. Источник — действующий прайс и тексты компании. */
