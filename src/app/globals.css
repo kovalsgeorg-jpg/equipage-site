@@ -28,6 +28,7 @@
   --line: rgba(201, 168, 108, 0.22);
   --line-soft: rgba(241, 234, 217, 0.12);
 
+  --panel: rgba(255, 255, 255, 0.03);
   --danger: #c96a5e;
   --danger-cream: #a33d34;
   --elev: 0 24px 60px rgba(0, 0, 0, 0.45);
@@ -58,10 +59,6 @@
 
   --panel: rgba(34, 35, 31, 0.04);
   --focus-ring: 0 0 0 4px rgba(138, 108, 42, 0.3);
-}
-
-:root {
-  --panel: rgba(255, 255, 255, 0.03);
 }
 
 @theme inline {
